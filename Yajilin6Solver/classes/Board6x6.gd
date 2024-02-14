@@ -58,6 +58,7 @@ func move_line2_right(ix) -> bool:
 	#print(ary_board[ix+ARY_WIDTH], " ", ary_board[ix-1], " ", ary_board[ix+ARY_WIDTH-1])
 	if ary_board[ix+ARY_WIDTH] != EMPTY || !is_line(ix-1) || !is_line(ix+ARY_WIDTH-1):
 		return false
+	if (ary_board[ix-1] & LINE_DOWN) == 0: return false		# 線分が連続していない場合
 	ary_board[ix] = LINE_LEFT | LINE_DOWN
 	ary_board[ix+ARY_WIDTH] = LINE_LEFT | LINE_UP
 	ary_board[ix-1] ^= LINE_RIGHT | LINE_DOWN
