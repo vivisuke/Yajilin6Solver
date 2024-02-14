@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgthgx02v541e"]
+[gd_scene load_steps=6 format=3 uid="uid://bgthgx02v541e"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_jyt1o"]
 [ext_resource type="Script" path="res://scripts/TitleBar.gd" id="1_kqcud"]
 [ext_resource type="Script" path="res://scripts/Grid.gd" id="2_rcw08"]
 [ext_resource type="Script" path="res://scripts/LineLayer.gd" id="3_p6ymd"]
+
+[sub_resource type="TileSet" id="TileSet_wovur"]
+tile_size = Vector2i(81, 81)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_jyt1o")
@@ -35,6 +38,7 @@ offset_right = 493.0
 offset_bottom = 566.0
 
 [node name="TileMap" type="TileMap" parent="Board"]
+tile_set = SubResource("TileSet_wovur")
 format = 2
 
 [node name="Grid" type="ColorRect" parent="Board"]
