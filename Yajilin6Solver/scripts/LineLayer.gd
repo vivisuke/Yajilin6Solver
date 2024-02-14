@@ -33,7 +33,11 @@ func _draw():
 		for y in range(N_VERT):
 			for x in range(N_HORZ):
 				var ix = xyToIX(x, y)
-				if ary_board[ix] > 0:
+				if ary_board[ix] == BLACK:
+					var px = CELL_WIDTH * x		# セル左位置
+					var py = CELL_WIDTH * y		# セル上位置
+					draw_rect(Rect2(px, py, CELL_WIDTH, CELL_WIDTH), Color.BLACK)
+				elif ary_board[ix] > 0:
 					var px = CELL_WIDTH * (x + 0.5)		# セル中央位置
 					var py = CELL_WIDTH * (y + 0.5)		# セル中央位置
 					draw_circle(Vector2(px, py), LN_WD/2, LN_COL)

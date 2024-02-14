@@ -15,6 +15,7 @@ const LINE_UP = 1
 const LINE_RIGHT = 2
 const LINE_DOWN = 4
 const LINE_LEFT = 8
+const DOT = 16
 
 var ary_board = []
 
@@ -32,6 +33,9 @@ func _init():
 	ary_board[xyToIX(0, 2)] = LINE_UP | LINE_RIGHT
 	ary_board[xyToIX(1, 2)] = LINE_LEFT | LINE_RIGHT
 	ary_board[xyToIX(2, 2)] = LINE_LEFT | LINE_UP
+	ary_board[xyToIX(4, 0)] = DOT
+	ary_board[xyToIX(5, 0)] = BLACK
+	ary_board[xyToIX(5, 1)] = DOT
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
