@@ -18,11 +18,20 @@ const LINE_LEFT = 8
 
 var ary_board = []
 
-func xyToAix(x, y):		# x, y: [0, N_HORZ)
+func xyToIX(x, y):		# x, y: [0, N_HORZ)
 	return x + (y+1) * ARY_HEIGHT
 
 func _init():
 	ary_board.resize(ARY_SIZE)
+	ary_board.fill(0)
+	ary_board[xyToIX(0, 0)] = LINE_RIGHT | LINE_DOWN
+	ary_board[xyToIX(1, 0)] = LINE_LEFT | LINE_DOWN
+	ary_board[xyToIX(0, 1)] = LINE_UP | LINE_DOWN
+	ary_board[xyToIX(1, 1)] = LINE_UP | LINE_RIGHT
+	ary_board[xyToIX(2, 1)] = LINE_LEFT | LINE_DOWN
+	ary_board[xyToIX(0, 2)] = LINE_UP | LINE_RIGHT
+	ary_board[xyToIX(1, 2)] = LINE_LEFT | LINE_RIGHT
+	ary_board[xyToIX(2, 2)] = LINE_LEFT | LINE_UP
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
