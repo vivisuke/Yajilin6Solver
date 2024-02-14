@@ -19,9 +19,10 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton && event.is_pressed():
-		var mp = $Board/TileMap.local_to_map($Board/TileMap.get_local_mouse_position())
-		print(mp)
-		bd.move_line(xyToIX(mp[0], mp[1]))
+		#var mp = $Board/TileMap.local_to_map($Board/TileMap.get_local_mouse_position())
+		#print(mp)
+		#bd.move_line(xyToIX(mp[0], mp[1]))
+		bd.make_loop_random()
 		$Board/LineLayer.queue_redraw()
 
 func _process(delta):

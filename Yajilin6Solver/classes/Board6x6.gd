@@ -17,6 +17,7 @@ const LINE_DOWN = 4
 const LINE_LEFT = 8
 const DOT = 16
 
+var n_empty = 0
 var ary_board = []
 var dir_order
 
@@ -27,6 +28,7 @@ func is_line(ix) -> bool:
 func _init():
 	dir_order = [LINE_UP, LINE_DOWN, LINE_LEFT, LINE_RIGHT]
 	ary_board.resize(ARY_SIZE)
+	ary_board.fill(WALL)
 	make_loop()
 	#ary_board[xyToIX(0, 0)] = LINE_RIGHT | LINE_DOWN
 	#ary_board[xyToIX(1, 0)] = LINE_LEFT | LINE_DOWN
@@ -40,7 +42,10 @@ func _init():
 	#ary_board[xyToIX(5, 0)] = BLACK
 	#ary_board[xyToIX(5, 1)] = DOT
 func make_loop():
-	ary_board.fill(0)
+	#ary_board.fill(0)
+	for y in range(N_VERT):
+		for x in range(N_HORZ):
+			ary_board[xyToIX(x, y)] = EMPTY
 	ary_board[xyToIX(1, 1)] = LINE_RIGHT | LINE_DOWN
 	ary_board[xyToIX(2, 1)] = LINE_LEFT | LINE_RIGHT
 	ary_board[xyToIX(3, 1)] = LINE_LEFT | LINE_RIGHT
@@ -53,6 +58,7 @@ func make_loop():
 	ary_board[xyToIX(2, 4)] = LINE_LEFT | LINE_RIGHT
 	ary_board[xyToIX(3, 4)] = LINE_LEFT | LINE_RIGHT
 	ary_board[xyToIX(4, 4)] = LINE_LEFT | LINE_UP
+	n_empty = N_HORZ * N_VERT - 12
 # ２セル縦方向ラインを右に１セルずらす
 # 前提：ary_board[ix] は空欄
 func move_line2_right(ix) -> bool:
@@ -116,6 +122,19 @@ func move_line(ix) -> bool:
 	#move_line2_right(xyToIX(5, 1))
 	#move_line2_right(xyToIX(2, 2))
 	return false
+func make_loop_random():
+	make_loop()
+	for i in range(10):
+		var lst = []
+		for ix in range(xyToIX(5, 5)+1):
+			if ary_board[ix] == EMPTY: lst.push_back(ix)
+		lst.shuffle()
+		var moved = false
+		for k in range(lst.size()):
+			if move_line(lst[k]):
+				moved = true
+				break
+		if !moved: break
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
