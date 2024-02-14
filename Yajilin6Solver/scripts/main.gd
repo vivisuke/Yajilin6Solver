@@ -9,6 +9,10 @@ func _ready():
 	$Board/LineLayer.queue_redraw()
 	pass # Replace with function body.
 
+func _input(event):
+	if event is InputEventMouseButton && event.is_pressed():
+		bd.move_line()
+		$Board/LineLayer.queue_redraw()
 
 func _process(delta):
 	pass

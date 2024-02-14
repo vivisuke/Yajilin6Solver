@@ -20,8 +20,9 @@ const DOT = 16
 var ary_board = []
 
 func xyToIX(x, y):		# x, y: [0, N_HORZ)
-	return x + (y+1) * ARY_HEIGHT
-
+	return x + (y+1) * ARY_WIDTH
+func is_line(ix) -> bool:
+	return ary_board[ix] > 0
 func _init():
 	ary_board.resize(ARY_SIZE)
 	make_loop()
@@ -50,7 +51,54 @@ func make_loop():
 	ary_board[xyToIX(2, 4)] = LINE_LEFT | LINE_RIGHT
 	ary_board[xyToIX(3, 4)] = LINE_LEFT | LINE_RIGHT
 	ary_board[xyToIX(4, 4)] = LINE_LEFT | LINE_UP
-	
+# ２セル縦方向ラインを右に１セルずらす
+# 前提：ary_board[ix] は空欄
+func move_line2_right(ix) -> bool:
+	#print("ix = ", ix)
+	#print(ary_board[ix+ARY_WIDTH], " ", ary_board[ix-1], " ", ary_board[ix+ARY_WIDTH-1])
+	if ary_board[ix+ARY_WIDTH] != EMPTY || !is_line(ix-1) || !is_line(ix+ARY_WIDTH-1):
+		return false
+	ary_board[ix] = LINE_LEFT | LINE_DOWN
+	ary_board[ix+ARY_WIDTH] = LINE_LEFT | LINE_UP
+	ary_board[ix-1] ^= LINE_RIGHT | LINE_DOWN
+	ary_board[ix+ARY_WIDTH-1] ^= LINE_RIGHT | LINE_UP
+	return true
+# ２セル縦方向ラインを左に１セルずらす
+# 前提：ary_board[ix] は空欄
+func move_line2_left(ix) -> bool:
+	if ary_board[ix+ARY_WIDTH] != EMPTY || !is_line(ix+1) || !is_line(ix+ARY_WIDTH+1):
+		return false
+	ary_board[ix] = LINE_RIGHT | LINE_DOWN
+	ary_board[ix+ARY_WIDTH] = LINE_RIGHT | LINE_UP
+	ary_board[ix+1] ^= LINE_LEFT | LINE_DOWN
+	ary_board[ix+ARY_WIDTH+1] ^= LINE_LEFT | LINE_UP
+	return true
+# ２セル縦方向ラインを上に１セルずらす
+# 前提：ary_board[ix] は空欄
+func move_line2_up(ix) -> bool:
+	if ary_board[ix+1] != EMPTY || !is_line(ix+ARY_WIDTH) || !is_line(ix+ARY_WIDTH+1):
+		return false
+	ary_board[ix] = LINE_RIGHT | LINE_DOWN
+	ary_board[ix+1] = LINE_LEFT | LINE_DOWN
+	ary_board[ix+ARY_WIDTH] ^= LINE_RIGHT | LINE_UP
+	ary_board[ix+ARY_WIDTH+1] ^= LINE_LEFT | LINE_UP
+	return true
+# ２セル縦方向ラインを下に１セルずらす
+# 前提：ary_board[ix] は空欄
+func move_line2_down(ix) -> bool:
+	if ary_board[ix+1] != EMPTY || !is_line(ix-ARY_WIDTH) || !is_line(ix-ARY_WIDTH+1):
+		return false
+	ary_board[ix] = LINE_RIGHT | LINE_UP
+	ary_board[ix+1] = LINE_LEFT | LINE_UP
+	ary_board[ix-ARY_WIDTH] ^= LINE_RIGHT | LINE_DOWN
+	ary_board[ix-ARY_WIDTH+1] ^= LINE_LEFT | LINE_DOWN
+	return true
+func move_line():
+	move_line2_up(xyToIX(1, 0))
+	move_line2_down(xyToIX(2, 5))
+	move_line2_left(xyToIX(0, 2))
+	move_line2_right(xyToIX(5, 1))
+	move_line2_right(xyToIX(2, 2))
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

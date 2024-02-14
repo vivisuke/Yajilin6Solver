@@ -26,7 +26,7 @@ const LN_WD = 9.0
 @export var ary_board = []
 
 func xyToIX(x, y):		# x, y: [0, N_HORZ)
-	return x + (y+1) * ARY_HEIGHT
+	return x + (y+1) * ARY_WIDTH
 
 func _draw():
 	if !ary_board.is_empty():
